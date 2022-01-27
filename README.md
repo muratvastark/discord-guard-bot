@@ -4,12 +4,12 @@
 ## Usage
 
 <ol>
-    <li>Clone repo and enter `config.ts` settings.</li>
+    <li>Clone repo and enter <code>config.ts</code> settings.</li>
     <li>Install ts-node <code>npm install -g ts-node</code> or <code>yarn global add ts-node</code></li>
     <li>Run <code>yarn start</code> or <code>npm run start</code> for production server, run <code>yarn dev</code> or <code>npm run dev</code> for development server.</li>
 	<li>Add bot your server.</li>
-	<li>If you haven't set the safes. Use `CONFIG.PREFIX+safe role or user`. See all safes use `CONFIG.PREFIX+safe list`.</li>
-	<li>Use `CONFIG.PREFIX+guard-menu` then click `Backup Start` button for start backup system </li>
+	<li>If you haven't set the safes. Use <code>CONFIG.PREFIX+safe role or user</code>. See all safes use <code>CONFIG.PREFIX+safe list</code>.</li>
+	<li>Use <code>CONFIG.PREFIX+guard-menu</code> then click <code>Backup Start</code> button for start backup system </li>
 	<li>If you want a log, you need to edit it public updates channel from the community settings</li>
 </ol>
 
