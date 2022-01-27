@@ -2,7 +2,6 @@
   "name": "discord-guard-bot",
   "version": "1.0.0",
   "main": "src/index.ts",
-  "private": true,
   "license": "Apache-2.0",
   "author": "Muratva Stark",
   "repository": "git+https://github.com/muratvastark/discord-guard-bot.git",
