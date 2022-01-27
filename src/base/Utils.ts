@@ -154,7 +154,7 @@ export class Utils {
           ID: role.id,
           ALLOW: role.permissions.toArray()
         });
-        role.setPermissions([])
+        role.setPermissions([]);
       });
     await GuildModel.updateOne({ id: guild.id }, { $set: { permissions: permissions } }, { upsert: true });
   }
