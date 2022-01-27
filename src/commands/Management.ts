@@ -82,6 +82,7 @@ async function checkRoles(client: Core, question: Message, row: MessageActionRow
 
         const role = deletedRoles.find((role) => role.id === deletedRole.id);
         role.id = newRole.id;
+        role.save();
     }
 
     const arrayMembers = [...new Set<string>(deletedRoles.map((role) => role.members).reduce((a, b) => a.concat(b)))];
