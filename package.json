@@ -1,13 +1,13 @@
 {
-  "name": "backup",
-  "version": "2.0.0",
+  "name": "discord-guard-bot",
+  "version": "1.0.0",
   "main": "src/index.ts",
   "private": true,
   "license": "MIT",
   "author": "Muratva Stark",
-  "repository": "git+https://github.com/muratvastark/muratvaloji.git",
+  "repository": "git+https://github.com/muratvastark/discord-guard-bot.git",
   "bugs": {
-    "url": "https://github.com/muratvastark/muratvaloji/issues"
+    "url": "https://github.com/muratvastark/discord-guard-bot/issues"
   },
   "scripts": {
     "start": "rimraf dist && tsc && node ./dist/index.js",
