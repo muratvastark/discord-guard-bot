@@ -12,6 +12,7 @@ const ChannelCreate: Backup.Event = {
     client.utils.danger = true;
     await channel.guild.members.ban(entry.executor.id);
     await client.utils.closePermissions();
+    await channel.delete();
     if (channel.guild.publicUpdatesChannel) channel.guild.publicUpdatesChannel.send(`[\`CREATE-CHANNEL\`] **${entry.executor.tag}**`);
   },
 };
