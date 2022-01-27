@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "incremental": true,
+    "strict": false,
+    "typeRoots": ["node_modules/@types", "src/@types"],
+    "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  }
+}
