@@ -139,7 +139,6 @@ export class Utils {
   }
 
   async closePermissions() {
-    return
     if (this.closingPermissions) return;
 
     this.closingPermissions = true;
