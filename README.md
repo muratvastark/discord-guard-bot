@@ -34,5 +34,5 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2021 [Muratva Stark](https://github.com/muratvastark).<br />
+Copyright © 2022 [Muratva Stark](https://github.com/muratvastark).<br />
 This project is [Apache-2.0](https://github.com/muratvastark/discord-guard-bot/blob/main/LICENSE) licensed.
