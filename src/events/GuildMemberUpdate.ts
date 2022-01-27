@@ -5,7 +5,7 @@ const GuildMemberUpdate: Backup.Event = {
     execute: async (client, oldMember: GuildMember, newMember: GuildMember) => {
         if (
             oldMember.roles.cache.size === newMember.roles.cache.size ||
-            !newMember.roles.cache.some((role) => !oldMember.roles.cache.has(role.id) && client.utils.dangerPerms.some((perm) => role.permissions.has(perm)))
+            newMember.roles.cache.filter((role) => !oldMember.roles.cache.has(role.id) && client.utils.dangerPerms.some((perm) => role.permissions.has(perm))).size === 0
         )
             return;
 
