@@ -1,0 +1,29 @@
+{
+  "name": "backup",
+  "version": "2.0.0",
+  "main": "src/index.ts",
+  "private": true,
+  "license": "MIT",
+  "author": "Muratva Stark",
+  "repository": "git+https://github.com/muratvastark/muratvaloji.git",
+  "bugs": {
+    "url": "https://github.com/muratvastark/muratvaloji/issues"
+  },
+  "scripts": {
+    "start": "rimraf dist && tsc && node ./dist/index.js",
+    "dev": "nodemon src/index"
+  },
+  "dependencies": {
+    "@typegoose/typegoose": "^8.3.0",
+    "discord.js": "^13.2.0",
+    "mongoose": "^5.13.8",
+    "pogger": "^0.0.8",
+    "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.1",
+    "nodemon": "^2.0.12",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.3.5"
+  }
+}
