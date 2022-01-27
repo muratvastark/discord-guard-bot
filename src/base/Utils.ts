@@ -4,6 +4,7 @@ import { Client, Collection, Intents, PermissionString, Snowflake } from 'discor
 import { Core } from './Core';
 import { RoleModel, RoleSchema } from '../models/Role';
 import { ChannelModel, ChannelSchema } from '../models/Channel';
+import { GuildModel } from '../models/Guild';
 
 enum ChannelTypes {
   GUILD_TEXT = 0,
