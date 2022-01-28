@@ -33,8 +33,11 @@ export class Core extends Client {
         this.logger.info('Connecting MongoDB...');
         await connect(CONFIG.MONGO_URL, {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true,
+            autoIndex: true,
+            connectTimeoutMS: 10000,
+            family: 4,
+            noDelay: true,
+            autoCreate: true
         });
 
         this.logger.success(`The system is activated. You can start the backup using the "${CONFIG.PREFIX}guard-menu" command on the server.`);
