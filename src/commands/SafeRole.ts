@@ -6,18 +6,16 @@ const SafeRole: Backup.Command = {
         const target = message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);
         if (!target) return message.channel.send('Specify a valid role.');
 
-        const data = await GuildModel.findOne({ id: message.guildId }) || new GuildModel({ id: message.guildId });
         let operation = 'added'; 
-        if (data.indelibleRoles.includes(target.id)) {
-            data.indelibleRoles = data.indelibleRoles.filter(role => role !== target.id);
+        if (client.utils.indelibleRoles.includes(target.id)) {
+            await GuildModel.updateOne({ id: message.guildId }, { $pull: { indelibleRoles: target.id } }, { upsert: true });
             client.utils.indelibleRoles = client.utils.indelibleRoles.filter(role => role !== target.id);
             operation = 'removed';
         } else {
             client.utils.indelibleRoles.push(target.id);
-            data.indelibleRoles.push(target.id);
+            await GuildModel.updateOne({ id: message.guildId }, { $push: { indelibleRoles: target.id } }, { upsert: true });
         }
 
-        data.save();
         message.channel.send({ content: `\`${target.name}\` ${operation} in list.` })
     },
 };
