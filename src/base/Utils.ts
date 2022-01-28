@@ -28,6 +28,7 @@ export class Utils {
   public closingPermissions: Boolean = false;
   private limits = new Collection<string, Backup.Limit>();
   public guildSettings: Backup.GuildSettings;
+  public safeRoles: Backup.SafeRole[] = [];
   public readonly dangerPerms: PermissionString[] = [
     'ADMINISTRATOR',
     'KICK_MEMBERS',
@@ -84,10 +85,10 @@ export class Utils {
 
   async getBackup(): Promise<boolean> {
     const guild = this.client.guilds.cache.get(this.client.config.GUILD_ID);
-    if (!guild || (!guild.roles.cache.size && !guild.channels.cache.size)) return false;
+    if (!guild || !guild.roles.cache.size || !guild.channels.cache.size) return false;
 
     await RoleModel.deleteMany();
-    guild.roles.cache.sort((a, b) => a.position - b.position).filter(role => !role.managed && role.id !== guild.id).forEach(async (role) => {
+    guild.roles.cache.sort((a, b) => a.position - b.position).filter(role => !role.managed).forEach(async (role) => {
       const channelOverwrites: Backup.RoleOverwrites[] = [];
       guild.channels.cache.forEach((channel) => {
         if (channel.isThread() || !channel.permissionOverwrites.cache.has(role.id)) return;
@@ -154,14 +155,14 @@ export class Utils {
           ID: role.id,
           ALLOW: role.permissions.toArray()
         });
-        role.setPermissions([]);
+        role.setPermissions([])
       });
     await GuildModel.updateOne({ id: guild.id }, { $set: { permissions: permissions } }, { upsert: true });
   }
 
-  checkLimits(id: Snowflake, type: 'ban_kick' | 'update_channel' | 'update_member', limit: number = 5, time: number = 1000 * 60 * 15) {
+  checkLimits(id: Snowflake, type: 'ban_kick' | 'channel_operations' | 'role_operations', limit: number = 5, time: number = 1000 * 60 * 15) {
     const now = Date.now().valueOf();
-    const key = `${id}-${type}`;
+    const key = `${id}_${type}`;
     const userLimits = this.limits.get(key);
     if (!userLimits) {
       this.limits.set(key, { count: 1, lastDate: now });
