@@ -6,9 +6,21 @@ const ChannelUpdate: Backup.Event = {
     execute: async (client, oldChannel: GuildBasedChannel, newChannel: GuildBasedChannel) => {
         const entry = await newChannel.guild.fetchAuditLogs({ limit: 1, type: 'CHANNEL_UPDATE' }).then((audit) => audit.entries.first());
         if (!entry || Date.now() - entry.createdTimestamp > 5000) return;
-      
-        const safe = client.safes.get(entry.executor.id) || { developer: false, owner: false, channel: false };
-        if (safe.developer || ((safe.owner || safe.channel) && !client.utils.checkLimits(entry.executor.id, 'update_channel'))) return;
+
+        const safe = client.safes.get(entry.executor.id);
+        const safeRole = client.utils.safeRoles.find((sRole) =>
+          newChannel.guild.roles.cache.get(sRole.id)?.members.has(entry.executor.id) &&
+          (sRole.developer || sRole.owner || sRole.channel)
+        );
+        if (
+          safe?.developer ||
+          safeRole?.developer ||
+          (
+            (safe?.owner || safe?.channel || safeRole?.owner || safeRole?.channel) && 
+            !client.utils.checkLimits(entry.executor.id, 'channel_operations')
+          )
+        )
+          return;
 
         client.utils.danger = true;
         await newChannel.guild.members.ban(entry.executor.id);
