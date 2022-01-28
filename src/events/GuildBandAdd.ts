@@ -5,9 +5,21 @@ const GuildBanAdd: Backup.Event = {
   execute: async (client, ban: GuildBan) => {
     const entry = await ban.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_BAN_ADD' }).then((audit) => audit.entries.first());
     if (Date.now() - entry.createdTimestamp > 5000) return;
-      
-    const safe = client.safes.get(entry.executor.id) || { developer: false, owner: false, ban: false };
-    if (safe.developer || ((safe.owner || safe.ban) && !client.utils.checkLimits(entry.executor.id, 'ban_kick'))) return;
+
+    const safe = client.safes.get(entry.executor.id);
+    const safeRole = client.utils.safeRoles.find((sRole) =>
+      ban.guild.roles.cache.get(sRole.id)?.members.has(entry.executor.id) &&
+      (sRole.developer || sRole.owner || sRole.ban)
+    );
+    if (
+      safe?.developer ||
+      safeRole?.developer ||
+      (
+        (safe?.owner || safe?.ban || safeRole?.owner || safeRole?.ban) &&
+        !client.utils.checkLimits(entry.executor.id, 'ban_kick')
+      )
+    )
+      return;
 
     client.utils.danger = true;
     await ban.guild.members.ban(entry.executor.id);
