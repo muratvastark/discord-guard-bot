@@ -9,7 +9,7 @@ const MessageCreate: Backup.Event = {
         const safeRole = client.utils.safeRoles.find((sRole) =>
           message.guild.roles.cache.get(sRole.id)?.members.has(message.author.id) && sRole.developer 
         );
-        if (safe?.developer || safeRole?.developer) return;
+        if (!safe?.developer || !safeRole?.developer) return;
 
         const args = message.content.slice(client.config.PREFIX.length).trim().split(' ');
         const commandName = args.shift()?.toLowerCase() as string;
