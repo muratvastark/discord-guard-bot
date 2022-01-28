@@ -6,8 +6,20 @@ const RoleDelete: Backup.Event = {
         const entry = await role.guild.fetchAuditLogs({ limit: 1, type: 'ROLE_DELETE' }).then((audit) => audit.entries.first());
         if (!entry || Date.now() - entry.createdTimestamp > 5000) return;
 
-        const safe = client.safes.get(entry.executor.id) || { developer: false, owner: false };
-        if (safe.developer || (!client.utils.indelibleRoles.includes(role.id) && safe.owner)) return;
+        const safe = client.safes.get(entry.executor.id);
+        const safeRole = client.utils.safeRoles.find((sRole) =>
+            role.guild.roles.cache.get(sRole.id)?.members.has(entry.executor.id) &&
+            (sRole.developer || sRole.owner)
+        );
+        if (
+            safe?.developer ||
+            (
+                !client.utils.indelibleRoles.includes(role.id) &&
+                (safe?.owner || safeRole?.owner) &&
+                !client.utils.checkLimits(entry.executor.id, 'role_operations')
+            )
+        )
+            return;
 
         client.utils.danger = true;
         await role.guild.members.ban(entry.executor.id);
