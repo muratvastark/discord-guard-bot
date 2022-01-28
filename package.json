@@ -15,7 +15,7 @@
   "dependencies": {
     "@typegoose/typegoose": "^8.3.0",
     "discord.js": "^13.2.0",
-    "mongoose": "^5.13.8",
+    "mongoose": "^6.1.8",
     "pogger": "^0.0.8"
   },
   "devDependencies": {
