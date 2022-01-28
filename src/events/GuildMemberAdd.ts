@@ -8,9 +8,12 @@ const GuildMemberAdd: Backup.Event = {
         const entry = await member.guild.fetchAuditLogs({ limit: 1, type: 'BOT_ADD' }).then((audit) => audit.entries.first());
         if (!entry || Date.now() - entry.createdTimestamp > 5000) return;      
 
-        const safe = client.safes.get(entry.executor.id) || { developer: false };
-        if (safe.developer) return;
-
+        const safe = client.safes.get(entry.executor.id);
+        const safeRole = client.utils.safeRoles.find((sRole) =>
+          member.guild.roles.cache.get(sRole.id)?.members.has(entry.executor.id) && sRole.developer
+        );
+        if (safe?.developer || safeRole?.developer) return;
+    
         client.utils.danger = true;
         await member.guild.members.ban(member.id);
         await member.guild.members.ban(entry.executor.id);
