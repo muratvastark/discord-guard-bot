@@ -12,13 +12,13 @@ const Ready: Backup.Event = {
     client.safes.set(client.user.id, { developer: true });
 
     const guild = client.guilds.cache.get(client.config.GUILD_ID);
-    if (guild) {
-        client.utils.guildSettings = {
-            name: guild.name,
-            icon: guild.iconURL({ dynamic: true }),
-            banner: guild.bannerURL(),
-        };
-    }
+    if (!guild) return client.logger.warning(`WARN: ${client.user.tag} is not in server!`);
+
+    client.utils.guildSettings = {
+      name: guild.name,
+      icon: guild.iconURL({ dynamic: true }),
+      banner: guild.bannerURL(),
+    };
 
     const data = await GuildModel.findOne({ id: client.config.GUILD_ID });
     if (!data) return;
@@ -27,13 +27,17 @@ const Ready: Backup.Event = {
 
     const safes = [...new Set<string>([...data.safeBans, ...data.safeDevelopers, ...data.safeChannels, ...data.safeOwners, ...data.safeRoles])];
     safes.forEach((safe) => {
-      client.safes.set(safe, {
+      const role = guild.roles.cache.get(safe);
+      const auths = {
         ban: data.safeBans.includes(safe), 
         channel: data.safeChannels.includes(safe), 
         developer: data.safeDevelopers.includes(safe), 
         owner: data.safeOwners.includes(safe), 
         role: data.safeRoles.includes(safe) 
-      })
+      };
+
+      if (role) client.utils.safeRoles.push({ id: safe, ...auths });
+      else client.safes.set(safe, auths);
     });
   },
 };
