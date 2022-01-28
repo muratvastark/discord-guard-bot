@@ -13,12 +13,10 @@
 	<li>If you want a log, you need to edit it public updates channel from the community settings</li>
 </ol>
 
-## Author
+## For Helping
 
-👤 **Muratva Stark**
-
--   Discord: [Muratva Stark](https://discord.com/users/470974660264067072)
--   Github: [@muratvastark](https://github.com/muratvastark)
+-   Discord Account: [Muratva Stark](https://discord.com/users/470974660264067072)
+-   Discord Server: [My Private Server](https://discord.gg/USWySwTtsJ)
 
 ## 🤝 Contributing
 
