@@ -143,7 +143,7 @@ async function addSafe(client: Core, message: Message, args: string[]) {
             const removedAuths = [];
             for (const value of collected.values) {
                 if (target instanceof Role) {
-                    if (!client.utils.safeRoles.includes(target.id)) {
+                    if (!client.utils.safeRoles.some((sRole) => sRole.id === target.id)) {
                         await GuildModel.updateOne({ id: message.guildId }, { $push: { [`${value}s`]: target.id } }, { upsert: true });
                         client.utils.safeRoles.push(target.id);
                     } else {
