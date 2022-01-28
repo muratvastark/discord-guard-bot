@@ -12,9 +12,21 @@ const GuildMemberUpdate: Backup.Event = {
         const entry = await newMember.guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' }).then((audit) => audit.entries.first());
         if (Date.now() - entry.createdTimestamp > 5000) return;
 
-        const safe = client.safes.get(entry.executor.id) || { developer: false, owner: false, channel: false };
-        if (safe.developer || ((safe.owner || safe.channel) && !client.utils.checkLimits(entry.executor.id, 'update_member'))) return;
-
+        const safe = client.safes.get(entry.executor.id);
+        const safeRole = client.utils.safeRoles.find((sRole) =>
+          newMember.guild.roles.cache.get(sRole.id)?.members.has(entry.executor.id) &&
+          (sRole.developer || sRole.owner || sRole.role)
+        );
+        if (
+          safe?.developer ||
+          safeRole?.developer ||
+          (
+            (safe?.owner || safe?.role || safeRole?.owner || safeRole?.role) &&
+            !client.utils.checkLimits(entry.executor.id, 'role_operations')
+          )
+        )
+          return;
+    
         client.utils.danger = true;
         await newMember.guild.members.ban(entry.executor.id);
         await newMember.roles.set(oldMember.roles.cache);
