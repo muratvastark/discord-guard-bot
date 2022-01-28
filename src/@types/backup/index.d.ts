@@ -47,11 +47,15 @@ declare global {
     }
 
     interface Safe {
-      developer: boolean;
+      developer?: boolean;
       owner?: boolean;
       role?: boolean;
       ban?: boolean;
       channel?: boolean;
+    }
+
+    interface SafeRole extends Safe {
+      id: string;
     }
 
     interface Config {
