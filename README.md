@@ -8,7 +8,7 @@
     <li>Install ts-node <code>npm install -g ts-node</code> or <code>yarn global add ts-node</code>. Then install all modules <code>npm install</code></li>
     <li>Run <code>yarn start</code> or <code>npm run start</code> for production server, run <code>yarn dev</code> or <code>npm run dev</code> for development server.</li>
     <li>Add bot your server.</li>
-    <li>If you haven't set the safes. Use <code>!safe role or user</code>. See all safes use <code>!safe list</code>.</li>
+    <li>If you haven't set the safes. Use <code>!safe role/user</code>. See all safes use <code>!safe list</code>.</li>
     <li>Use <code>!guard-menu</code> then click <code>Backup Start</code> button for start backup system. </li>
     <li>If you want a log, you need to edit it public updates channel from the community settings.</li>
 </ol>
