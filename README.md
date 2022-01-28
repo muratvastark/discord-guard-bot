@@ -4,7 +4,7 @@
 ## Usage
 
 <ol>
-    <li>Clone repo and enter <code>config.ts</code> settings.</li>
+    <li>Clone repo and enter <code>config.ts</code> settings. (NOTE: Minumum 2 tokens.)</li>
     <li>Install ts-node <code>npm install -g ts-node</code> or <code>yarn global add ts-node</code></li>
     <li>Run <code>yarn start</code> or <code>npm run start</code> for production server, run <code>yarn dev</code> or <code>npm run dev</code> for development server.</li>
 	<li>Add bot your server.</li>
