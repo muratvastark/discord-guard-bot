@@ -84,7 +84,7 @@ export class Utils {
 
   async getBackup(): Promise<boolean> {
     const guild = this.client.guilds.cache.get(this.client.config.GUILD_ID);
-    if (!guild || !guild.roles.cache.size || !guild.channels.cache.size) return false;
+    if (!guild || (!guild.roles.cache.size && !guild.channels.cache.size)) return false;
 
     await RoleModel.deleteMany();
     guild.roles.cache.sort((a, b) => a.position - b.position).filter(role => !role.managed && role.id !== guild.id).forEach(async (role) => {
