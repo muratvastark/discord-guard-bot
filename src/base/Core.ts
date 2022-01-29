@@ -36,6 +36,8 @@ export class Core extends Client {
             autoIndex: true,
             connectTimeoutMS: 10000,
             family: 4,
+            useUnifiedTopology: true,
+            useCreateIndex: true,
             noDelay: true,
             autoCreate: true
         });
