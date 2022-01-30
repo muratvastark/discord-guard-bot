@@ -69,6 +69,7 @@ export class Utils {
             return;
           }
 
+          this.client.safes.set(helperClient.user.id, { developer: true });
           resolve(helperClient);
         });
 
