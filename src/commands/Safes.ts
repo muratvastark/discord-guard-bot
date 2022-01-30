@@ -120,9 +120,9 @@ async function addSafe(client: Core, message: Message, args: string[]) {
                 description: [
                     `**Developer:** Everything is free.`,
                     `**Owner:** Everything is free except deleting secure roles and everything is limited.`,
-                    `**Role:** Give and remove role.`,
-                    `**Ban and Kick:** Only ban and kick operations free.`,
-                    `**Channel:** Change channel name and change permissions.`
+                    `**Role:** Only operations is limited.`,
+                    `**Ban and Kick:** Only ban and kick operations is limited.`,
+                    `**Channel:** Only channel operations is limited.`
                 ].join('\n'),
                 color: 'RANDOM',
                 footer: {
