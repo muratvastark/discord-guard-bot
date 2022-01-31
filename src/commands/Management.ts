@@ -84,6 +84,32 @@ async function checkRoles(client: Core, question: Message, row: MessageActionRow
         const role = deletedRoles.find((role) => role.id === deletedRole.id);
         role.id = newRole.id;
         
+        const safeRole = client.utils.safeRoles.find((sRole) => sRole.id === deletedRole.id);
+        if (safeRole) {
+            const operation: { [key: string]: string } = {};
+            if (safeRole.developer) operation['safeDevelopers'] = newRole.id;
+            if (safeRole.owner) operation['safeOwners'] = newRole.id;
+            if (safeRole.role) operation['safeRoles'] = newRole.id;
+            if (safeRole.ban) operation['safeBans'] = newRole.id;
+            if (safeRole.channel) operation['safeChannels'] = newRole.id;
+
+            safeRole.id = newRole.id;
+            await GuildModel.updateOne(
+                { id: question.guildId }, 
+                { 
+                    $push: operation, 
+                    $pull: { 
+                        safeDevelopers: deletedRole.id, 
+                        safeOwners: deletedRole.id,
+                        safeRoles: deletedRole.id,
+                        safeBans: deletedRole.id,
+                        safeChannels: deletedRole.id 
+                    } 
+                }, 
+                { upsert: true }
+            );
+        }
+        
         if (client.utils.indelibleRoles.includes(deletedRole.id)) {
             client.utils.indelibleRoles = client.utils.indelibleRoles.filter((iRole) => iRole !== deletedRole.id);
             client.utils.indelibleRoles.push(newRole.id);
