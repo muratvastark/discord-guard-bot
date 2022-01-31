@@ -1,4 +1,5 @@
 import { GuildModel } from '../models/Guild';
+import { Team } from 'discord.js';
 
 const Ready: Backup.Event = {
   name: 'ready',
@@ -8,7 +9,8 @@ const Ready: Backup.Event = {
     }, 1000 * 60 * 60);
 
     await client.application.fetch();
-    client.safes.set(client.application.owner.id, { developer: true });
+    const ownerID = client.application.owner instanceof Team ? (client.application.owner as Team).ownerId : client.application.owner.id;
+    client.safes.set(ownerID, { developer: true });
     client.safes.set(client.user.id, { developer: true });
 
     const guild = client.guilds.cache.get(client.config.GUILD_ID);
