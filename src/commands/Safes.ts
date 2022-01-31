@@ -54,8 +54,14 @@ async function showLists(client: Core, message: Message) {
         interaction.deferUpdate();
 
         const componentId = interaction.customId.split('-')[1];
+        const key = componentId.slice(4).slice(0, -1).toLowerCase();
         interaction.values.forEach(async (value) => {
-            client.safes.delete(value);
+            const safeRole = client.utils.safeRoles.find((sRole) => sRole.id === value);
+            if (safeRole) safeRole[key] = false;
+
+            const safe = client.safes.get(value);
+            if (safe) safe[key] = false;
+
             await GuildModel.updateOne({ id: message.guildId }, { $pull: { [componentId]: value } })
         });
         
