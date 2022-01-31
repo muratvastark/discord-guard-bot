@@ -1,5 +1,6 @@
 import { GuildChannel, Message, MessageActionRow, MessageButton } from 'discord.js';
 import { RoleModel } from '../models/Role';
+import { GuildModel } from '../models/Guild';
 import { ChannelModel, ChannelSchema } from '../models/Channel';
 import { Core } from '../base/Core';
 
@@ -82,6 +83,12 @@ async function checkRoles(client: Core, question: Message, row: MessageActionRow
 
         const role = deletedRoles.find((role) => role.id === deletedRole.id);
         role.id = newRole.id;
+        
+        if (client.utils.indelibleRoles.includes(deletedRole.id)) {
+            client.utils.indelibleRoles = client.utils.indelibleRoles.filter((iRole) => iRole !== deletedRole.id);
+            client.utils.indelibleRoles.push(newRole.id);
+            await GuildModel.updateOne({ id: message.guildId }, { $pull: { indelibleRoles: deletedRole.id }, $push: { indelibleRoles: newRole.id } }, { upsert: true });
+        }
     }
 
     const arrayMembers = [...new Set<string>(deletedRoles.map((role) => role.members).reduce((a, b) => a.concat(b)))];
