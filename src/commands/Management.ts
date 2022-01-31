@@ -87,7 +87,7 @@ async function checkRoles(client: Core, question: Message, row: MessageActionRow
         if (client.utils.indelibleRoles.includes(deletedRole.id)) {
             client.utils.indelibleRoles = client.utils.indelibleRoles.filter((iRole) => iRole !== deletedRole.id);
             client.utils.indelibleRoles.push(newRole.id);
-            await GuildModel.updateOne({ id: message.guildId }, { $pull: { indelibleRoles: deletedRole.id }, $push: { indelibleRoles: newRole.id } }, { upsert: true });
+            await GuildModel.updateOne({ id: question.guildId }, { $pull: { indelibleRoles: deletedRole.id }, $push: { indelibleRoles: newRole.id } }, { upsert: true });
         }
     }
 
