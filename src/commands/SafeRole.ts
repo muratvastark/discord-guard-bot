@@ -4,7 +4,7 @@ const SafeRole: Backup.Command = {
     usages: ['safe-role', 'saferole', 'srole', 'srol'],
     execute: async ({ client, message, args }) => {
         if (args[0] === 'list') {
-            message.channel.send(client.utils.indelibleRoles.map(role => (message.guild.roles.cache.get(role) || { name: role }).name).join(', '));
+            message.channel.send(client.utils.indelibleRoles.map(role => `\`${(message.guild.roles.cache.get(role) || { name: role }).name}\``).join(', '));
             return;
         }
         
