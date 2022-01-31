@@ -29,4 +29,4 @@ Give a ⭐️ if this project helped you!
 ## 📝 License
 
 Copyright © 2022 [Muratva Stark](https://github.com/muratvastark).<br />
-This project is [Creative Commons](https://github.com/muratvastark/discord-guard-bot/blob/main/LICENSE) licensed.
+This project is [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International ("CC-BY-NC-SA-4.0")](https://github.com/muratvastark/discord-guard-bot/blob/main/LICENSE) licensed.
