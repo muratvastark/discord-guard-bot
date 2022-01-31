@@ -13,6 +13,7 @@ const RoleDelete: Backup.Event = {
         );
         if (
             safe?.developer ||
+            safeRole?.developer ||
             (
                 !client.utils.indelibleRoles.includes(role.id) &&
                 (safe?.owner || safeRole?.owner) &&
