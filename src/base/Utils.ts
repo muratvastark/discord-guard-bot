@@ -174,7 +174,7 @@ export class Utils {
     const diff = now - userLimits.lastDate;
     if (diff < time && userLimits.count >= limit) return true;
 
-    if (diff > time) this.limits.delete(id);
+    if (diff > time) this.limits.set(key, { count: 1, lastDate: now });;
     return false;
   }
 
