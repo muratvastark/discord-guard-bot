@@ -154,12 +154,14 @@ async function addSafe(client: Core, message: Message, args: string[]) {
                     if (!safeRole[newKey]) {
                         await GuildModel.updateOne({ id: message.guildId }, { $push: { [`${value}s`]: target.id } }, { upsert: true });
                         safeRole[newKey] = true;
+                        addedAuths.push(newKey);
                     } else {
                         await GuildModel.updateOne({ id: message.guildId }, { $pull: { [`${value}s`]: target.id } }, { upsert: true });
                         safeRole[newKey] = false;
+                        removedAuths.push(newKey);
                     }
                     if (!client.utils.safeRoles.some((sRole) => sRole.id === target.id)) client.utils.safeRoles.push({ ...safeRole, id: target.id })
-                    return;
+                    continue;
                 }
 
                 const person = client.safes.get(target.id) || { ban: false, channel: false, developer: false, owner: false, role: false };
