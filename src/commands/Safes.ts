@@ -157,7 +157,7 @@ async function addSafe(client: Core, message: Message, args: string[]) {
                         await GuildModel.updateOne({ id: message.guildId }, { $pull: { [`${value}s`]: target.id } }, { upsert: true });
                         safeRole[value] = false;
                     }
-                    if (!client.utils.safeRoles.find((sRole) => sRole.id === target.id)) client.utils.safeRoles.push({ ...safeRole, id: target.id })
+                    if (!client.utils.safeRoles.some((sRole) => sRole.id === target.id)) client.utils.safeRoles.push({ ...safeRole, id: target.id })
                     return;
                 }
 
